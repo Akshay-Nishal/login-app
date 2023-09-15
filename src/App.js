@@ -6,36 +6,36 @@ import { AuthContext, AuthProvider } from './context/authContext';
 
 function App() {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const {isLogin,setLogin} = useContext(AuthContext)
-  console.log(isLogin);
+  const ctx = useContext(AuthContext)
+  console.log(ctx.isLogin);
   
 
   useEffect(() => {
     const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
 
     if (storedUserLoggedInInformation === '1') {
-      setLogin(true);
+      ctx.setLogin(true);
     }
   }, []);
 
-  const loginHandler = (email, password) => {
-    // We should of course check email and password
-    // But it's just a dummy/ demo anyways
-    localStorage.setItem('isLoggedIn', '1');
-    setLogin(true);
-  };
+  // const loginHandler = (email, password) => {
+  //   // We should of course check email and password
+  //   // But it's just a dummy/ demo anyways
+  //   localStorage.setItem('isLoggedIn', '1');
+  //   setLogin(true);
+  // };
 
-  const logoutHandler = () => {
-    localStorage.removeItem('isLoggedIn');
-    setLogin(false);
-  };
+  // const logoutHandler = () => {
+  //   localStorage.removeItem('isLoggedIn');
+  //   setLogin(false);
+  // };
 
   return (
     <>
-      <MainHeader isAuthenticated={isLogin} onLogout={logoutHandler} />
+      <MainHeader isAuthenticated={ctx.isLogin}/>
       <main>
-        {!isLogin && <Login onLogin={loginHandler} />}
-        {isLogin && <Home onLogout={logoutHandler} />}
+        {!ctx.isLogin && <Login/>}
+        {ctx.isLogin && <Home/>}
       </main>
     </>
   );
